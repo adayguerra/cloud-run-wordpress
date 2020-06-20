@@ -6,9 +6,18 @@ EXPOSE 8080
 RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 # wordpress conf
 COPY wordpress/wp-config.php /var/www/html/wp-config.php
-RUN mkdir -p /var/www/html/wp-content
-COPY wordpress/wp-content/ /var/www/html/wp-content/
 
+
+
+
+
+
+RUN mkdir -p /var/www/html/wordpress/wp-content; 
+	
+
+COPY wordpress/wp-content/ /var/www/html/wordpress/wp-content/
+RUN chown -R www-data:www-data /var/www/html/wordpress/wp-content; \
+RUN	chmod -R 777 /var/www/html/wordpress/wp-content
 # download and install cloud_sql_proxy
 RUN apt-get update && apt-get -y install net-tools wget && \
     wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /usr/local/bin/cloud_sql_proxy && \ 
